@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Scene, { type Reaction } from "./components/Scene";
 import { candidates, introLines, type Relation } from "./data";
 
 type Verdict = "heaven" | "hell";
@@ -7,6 +8,7 @@ const TOTAL = candidates.length;
 const QUOTA = TOTAL / 2;
 
 export default function App() {
+  const [reaction, setReaction] = useState<Reaction>(null);
   const [intro, setIntro] = useState(0);
   const [index, setIndex] = useState(0);
   const [heaven, setHeaven] = useState(0);
@@ -24,6 +26,7 @@ export default function App() {
     const label = v === "heaven" ? "天国" : "地獄";
     if (v === "heaven") setHeaven(heaven + 1);
     else setHell(hell + 1);
+    setReaction({ kind: v, n: index + 1 });
     setIndex(index + 1);
     setVerdicts([...verdicts, v]);
     setLog(`${current.name} を${label}へ。`);
@@ -31,6 +34,7 @@ export default function App() {
 
   const reset = () => {
     setIntro(introLines.length);
+    setReaction(null);
     setIndex(0);
     setHeaven(0);
     setHell(0);
@@ -45,10 +49,7 @@ export default function App() {
     return (
       <main className="app intro" onClick={() => setIntro(intro + 1)}>
         <h1 className="title">地獄の審判者</h1>
-        <div className="scene">
-          <div className="avatar" role="img" aria-label="少女">👧</div>
-          <div className="avatar small" role="img" aria-label="猫">🐈‍⬛</div>
-        </div>
+        <Scene reaction={null} />
         <p className="bubble">{introLines[intro]}</p>
         <p className="hint">タップして進む（{intro + 1}/{introLines.length}）</p>
         <p className="note">※ 死や自死など重いテーマを含みます。</p>
@@ -66,7 +67,7 @@ export default function App() {
       </header>
 
       <section className="judge" aria-label="審判者">
-        <div className="avatar" role="img" aria-label="審判者のイラスト">👹</div>
+        <Scene reaction={reaction} />
         <p className="bubble">
           {done ? "業務終了。おつかれさま。" : `「${current.statement}」`}
         </p>
