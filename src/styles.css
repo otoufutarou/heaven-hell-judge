@@ -1,5 +1,5 @@
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html, body { margin: 0; background: #e8f6f4; color: #1d3b3a; }
+html, body { margin: 0; min-height: 100%; background: #0e2f2b; color: #d9f4e9; }
 body { font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", "Comic Sans MS", sans-serif; }
 
 .app {
@@ -7,22 +7,32 @@ body { font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", "Comic Sans MS", s
   padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
   display: flex; flex-direction: column; gap: 16px;
 }
+.game-screen { position: relative; isolation: isolate; }
+.game-screen::before {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    linear-gradient(rgba(14, 47, 43, .54), rgba(14, 47, 43, .72)),
+    url("../IMG_1483.png") center / cover no-repeat;
+  transform: scale(1.03);
+  animation: background-drift 14s ease-in-out infinite alternate;
+}
+.game-screen > :not(.fx-heaven):not(.fx-hell):not(.fx-transition) { position: relative; z-index: 2; }
 .panel {
-  background: #fff; border: 3px solid #2b6f6b; border-radius: 22px 18px 24px 16px;
-  padding: 14px 16px; box-shadow: 3px 4px 0 #9fd6d0;
+  background: rgba(14, 47, 43, .88); border: 2px solid #4dbb9a; border-radius: 22px 18px 24px 16px;
+  padding: 14px 16px; box-shadow: 3px 4px 0 rgba(14, 47, 43, .8);
 }
 .status { display: flex; justify-content: space-between; font-size: 14px; }
 .status b { font-size: 18px; }
-.heaven-text { color: #2a8fb0; }
-.hell-text { color: #b0392f; }
+.heaven-text { color: #8fe3c2; }
+.hell-text { color: #4dbb9a; }
 
 .judge { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .avatar {
   width: 120px; height: 120px; border-radius: 50%; display: grid; place-items: center;
-  font-size: 64px; background: #cfeeea; border: 3px solid #2b6f6b;
+  font-size: 64px; background: #1e5a52; border: 3px solid #4dbb9a;
 }
 .bubble {
-  margin: 0; padding: 10px 16px; background: #fff; border: 3px solid #2b6f6b;
+  margin: 0; padding: 10px 16px; background: rgba(14, 47, 43, .9); border: 2px solid #4dbb9a;
   border-radius: 20px; text-align: center;
 }
 
@@ -34,31 +44,32 @@ body { font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", "Comic Sans MS", s
 .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; position: sticky; bottom: 8px; }
 .btn, .reset {
   min-height: 72px; font-size: 20px; font-weight: bold; font-family: inherit;
-  border: 3px solid #2b6f6b; border-radius: 22px; cursor: pointer; touch-action: manipulation;
+  border: 2px solid #1e5a52; border-radius: 22px; cursor: pointer; touch-action: manipulation;
 }
-.btn.heaven { background: #bfe6f5; color: #1c5a73; }
-.btn.hell { background: #f3b9b0; color: #7a1f17; }
+.btn.heaven { background: #8fe3c2; color: #0e2f2b; }
+.btn.hell { background: #1e5a52; color: #d9f4e9; border-color: #4dbb9a; }
 .btn:active { transform: translateY(2px); }
 .btn:disabled { opacity: 0.4; cursor: default; }
-.reset { padding: 0 28px; background: #cfeeea; margin-top: 8px; }
+.reset { padding: 0 28px; background: #8fe3c2; color: #0e2f2b; margin-top: 8px; }
 
 .log { font-size: 14px; min-height: 52px; }
 
 .summary { list-style: none; padding: 0; margin: 8px 0 0; text-align: left; line-height: 1.9; font-size: 14px; }
-.summary .heaven { color: #1c5a73; }
-.summary .hell { color: #7a1f17; }
+.summary .heaven { color: #8fe3c2; }
+.summary .hell { color: #4dbb9a; }
 
 .intro { justify-content: center; align-items: center; text-align: center; cursor: pointer; }
+.intro .scene-transition { display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .title { margin: 0; font-size: 28px; }
 .scene { display: flex; gap: 16px; align-items: flex-end; }
 .avatar.small { width: 72px; height: 72px; font-size: 38px; }
-.hint, .note { margin: 0; font-size: 13px; color: #5a8a86; }
-.resume h3 { margin: 12px 0 0; font-size: 16px; border-bottom: 2px dashed #9fd6d0; }
-.resume h4 { margin: 12px 0 4px; font-size: 14px; color: #2b6f6b; }
+.hint, .note { margin: 0; font-size: 13px; color: #8fe3c2; }
+.resume h3 { margin: 12px 0 0; font-size: 16px; border-bottom: 2px dashed #4dbb9a; }
+.resume h4 { margin: 12px 0 4px; font-size: 14px; color: #8fe3c2; }
 .resume li { margin-bottom: 6px; font-size: 14px; }
-.none { margin: 0; font-size: 14px; color: #7a9a97; }
+.none { margin: 0; font-size: 14px; color: #8fe3c2; }
 
-.scene-svg { width: 100%; max-width: 440px; border: 3px solid #2b6f6b; border-radius: 18px; image-rendering: pixelated; background: #cfeeea; }
+.scene-svg { width: 100%; max-width: 440px; border: 3px solid #4dbb9a; border-radius: 18px; image-rendering: pixelated; background: #1e5a52; }
 .scene-svg * { transform-box: fill-box; }
 .girl { animation: breathe 2.4s ease-in-out infinite; }
 .blink { transform-origin: center; animation: blink 4s infinite; }
@@ -75,14 +86,41 @@ body { font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", "Comic Sans MS", s
 .spark { opacity: 0; animation: rise 1.2s ease-out forwards; }
 .flame { opacity: 0; transform-origin: 50% 100%; animation: flicker 1.2s ease-out forwards; }
 
+.fx-heaven, .fx-hell, .fx-transition { position: fixed; inset: 0; pointer-events: none; }
+.fx-heaven, .fx-hell { z-index: 1; }
+.fx-transition { z-index: 3; background: rgba(14, 47, 43, .34); animation: scene-fade .28s ease-out forwards; }
+.fx-heaven {
+  background: radial-gradient(ellipse at 50% 45%, rgba(143, 227, 194, .16), transparent 70%);
+}
+.fx-heaven span {
+  position: absolute; width: 4px; height: 4px; background: #d9f4e9;
+  box-shadow: 0 0 12px 3px rgba(143, 227, 194, .72);
+  animation: drift 5s ease-in-out infinite;
+}
+.fx-hell {
+  background:
+    radial-gradient(ellipse at 15% 75%, rgba(14, 47, 43, .78), transparent 58%),
+    radial-gradient(ellipse at 85% 55%, rgba(30, 90, 82, .62), transparent 60%);
+  animation: hell-pulse 4s ease-in-out infinite alternate;
+}
+
 @keyframes breathe { 50% { transform: translateY(-0.4px); } }
 @keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(0.1); } }
 @keyframes wag { 50% { transform: rotate(14deg); } }
 @keyframes pulse { 50% { opacity: 0.5; } }
 @keyframes hop { 30% { transform: translateY(-3px); } 60% { transform: translateY(0); } 80% { transform: translateY(-1px); } }
 @keyframes shake { 20% { transform: translateX(-1px); } 40% { transform: translateX(1px); } 60% { transform: translateX(-1px); } 80% { transform: translateX(1px); } }
-@keyframes flash { 20% { opacity: 0.45; } 100% { opacity: 0; } }
+@keyframes flash { 20% { opacity: 0.35; } 100% { opacity: 0; } }
 @keyframes halo { 0% { opacity: 0; transform: translateY(2px); } 30% { opacity: 1; } 100% { opacity: 0; } }
 @keyframes rise { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-24px); } }
 @keyframes flicker { 0% { opacity: 0; transform: scaleY(0.2); } 30% { opacity: 1; transform: scaleY(1.1); } 100% { opacity: 0; transform: scaleY(0.8); } }
-@media (prefers-reduced-motion: reduce) { .scene-svg * { animation: none !important; } }
+@keyframes background-drift { to { transform: scale(1.03) translateY(-3px); } }
+@keyframes scene-fade { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes drift { 0%, 100% { opacity: .25; transform: translate3d(0, 8px, 0); } 50% { opacity: .95; transform: translate3d(5px, -12px, 0); } }
+@keyframes hell-pulse { from { opacity: .7; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .game-screen::before, .fx-heaven span, .fx-hell, .fx-transition { animation: none !important; }
+  .fx-heaven span { opacity: .5; }
+  .scene-svg * { animation: none !important; }
+}

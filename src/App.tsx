@@ -44,13 +44,17 @@ export default function App() {
 
   const heavenFull = heaven >= QUOTA;
   const hellFull = hell >= QUOTA;
+  const screenState = reaction ? `is-${reaction.kind}` : "";
 
   if (inIntro) {
     return (
-      <main className="app intro" onClick={() => setIntro(intro + 1)}>
-        <h1 className="title">地獄の審判者</h1>
-        <Scene reaction={null} />
-        <p className="bubble">{introLines[intro]}</p>
+      <main className="app game-screen intro" onClick={() => setIntro(intro + 1)}>
+        <div className="fx-transition" key={`intro-${intro}`} aria-hidden="true" />
+        <div className="scene-transition">
+          <h1 className="title">地獄の審判者</h1>
+          <Scene reaction={null} />
+          <p className="bubble">{introLines[intro]}</p>
+        </div>
         <p className="hint">タップして進む（{intro + 1}/{introLines.length}）</p>
         <p className="note">※ 死や自死など重いテーマを含みます。</p>
       </main>
@@ -58,7 +62,23 @@ export default function App() {
   }
 
   return (
-    <main className="app">
+    <main className={`app game-screen ${screenState}`}>
+      <div className="fx-transition" key={`scene-${index}`} aria-hidden="true" />
+      {reaction?.kind === "heaven" && (
+        <div className="fx-heaven" aria-hidden="true">
+          {Array.from({ length: 10 }, (_, i) => (
+            <span
+              key={i}
+              style={{
+                left: `${8 + ((i * 29) % 84)}%`,
+                top: `${12 + ((i * 37) % 72)}%`,
+                animationDelay: `${(i % 5) * -0.8}s`,
+              }}
+            />
+          ))}
+        </div>
+      )}
+      {reaction?.kind === "hell" && <div className="fx-hell" aria-hidden="true" />}
       <header className="panel status">
         <div>判定 <b>{Math.min(index, TOTAL)}/{TOTAL}</b></div>
         <div className="heaven-text">天国 <b>{heaven}</b></div>
@@ -107,10 +127,10 @@ export default function App() {
 
       <div className="actions">
         <button className="btn heaven" disabled={done || heavenFull} onClick={() => judge("heaven")}>
-          ☁ 天国へ{heavenFull && "（満員）"}
+          ✧ 天国へ{heavenFull && "（満員）"}
         </button>
         <button className="btn hell" disabled={done || hellFull} onClick={() => judge("hell")}>
-          🔥 地獄へ{hellFull && "（満員）"}
+          ◇ 地獄へ{hellFull && "（満員）"}
         </button>
       </div>
 
