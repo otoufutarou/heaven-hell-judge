@@ -46,6 +46,23 @@ body { font-family: "DotGothic16", "PixelMplus12", "ＭＳ ゴシック", "Yu Go
   transform: translateX(-50%); animation: girl-breathe 3.7s ease-in-out infinite;
   transform-origin: 50% 90%;
 }
+.girl-motion { z-index: 2; }
+.hair-left {
+  clip-path: polygon(18% 23%, 37% 33%, 34% 57%, 30% 77%, 23% 96%, 17% 93%, 20% 70%, 17% 49%);
+  transform-origin: 28% 45%; animation: hair-left 4.3s ease-in-out infinite;
+}
+.hair-right {
+  clip-path: polygon(63% 33%, 82% 23%, 83% 49%, 80% 70%, 83% 93%, 77% 96%, 70% 77%, 66% 57%);
+  transform-origin: 72% 45%; animation: hair-right 4.7s ease-in-out infinite;
+}
+.wing-left {
+  clip-path: polygon(0 39%, 22% 41%, 34% 51%, 28% 65%, 15% 69%, 4% 65%);
+  transform-origin: 24% 55%; animation: wing-left 3.5s ease-in-out infinite;
+}
+.wing-right {
+  clip-path: polygon(78% 41%, 100% 39%, 96% 65%, 85% 69%, 72% 65%, 66% 51%);
+  transform-origin: 76% 55%; animation: wing-right 3.9s ease-in-out infinite;
+}
 .cat-image {
   z-index: 3; left: 68%; bottom: 24%; width: 14%; max-height: 35%;
   animation: cat-bob 3.2s ease-in-out infinite;
@@ -117,6 +134,10 @@ body { font-family: "DotGothic16", "PixelMplus12", "ＭＳ ゴシック", "Yu Go
 }
 
 @keyframes girl-breathe { 0%, 100% { transform: translate(-50%, 0) rotate(0); } 50% { transform: translate(-50%, -3px) rotate(.35deg); } }
+@keyframes hair-left { 0%, 100% { transform: translateX(-50%) rotate(-.8deg); } 50% { transform: translateX(-50%) rotate(1.2deg); } }
+@keyframes hair-right { 0%, 100% { transform: translateX(-50%) rotate(.8deg); } 50% { transform: translateX(-50%) rotate(-1.2deg); } }
+@keyframes wing-left { 0%, 100% { transform: translateX(-50%) rotate(-.5deg) scaleY(1); } 50% { transform: translateX(-50%) rotate(1deg) scaleY(.99); } }
+@keyframes wing-right { 0%, 100% { transform: translateX(-50%) rotate(.5deg) scaleY(1); } 50% { transform: translateX(-50%) rotate(-1deg) scaleY(.99); } }
 @keyframes desk-shift { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, -1px); } }
 @keyframes cat-bob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-2px) rotate(.6deg); } }
 @keyframes bubble-in { from { opacity: 0; translate: 0 4px; } to { opacity: 1; translate: 0 0; } }

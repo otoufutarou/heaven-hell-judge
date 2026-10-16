@@ -42,6 +42,10 @@ export default function Scene({
     <div className="scene-stage" role="group" aria-label="審判室の少女と猫">
       <img className="scene-image desk-image" src={deskImage} alt="" />
       <img className="scene-image girl-image" src={girlImage} alt="" />
+      <img className="scene-image girl-image girl-motion hair-left" src={girlImage} alt="" />
+      <img className="scene-image girl-image girl-motion hair-right" src={girlImage} alt="" />
+      <img className="scene-image girl-image girl-motion wing-left" src={girlImage} alt="" />
+      <img className="scene-image girl-image girl-motion wing-right" src={girlImage} alt="" />
       <img className="scene-image cat-image" src={catImage} alt="" />
       <p className="bubble scene-bubble" aria-live="polite" key={completed ? "completed" : chatIndex}>
         {completed ? "ふう、ひと休憩〜" : CHAT_LINES[chatIndex]}
