@@ -43,3 +43,7 @@ body { font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", "Comic Sans MS", s
 .reset { padding: 0 28px; background: #cfeeea; margin-top: 8px; }
 
 .log { font-size: 14px; min-height: 52px; }
+
+.summary { list-style: none; padding: 0; margin: 8px 0 0; text-align: left; line-height: 1.9; font-size: 14px; }
+.summary .heaven { color: #1c5a73; }
+.summary .hell { color: #7a1f17; }

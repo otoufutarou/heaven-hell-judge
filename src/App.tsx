@@ -11,16 +11,19 @@ export default function App() {
   const [heaven, setHeaven] = useState(0);
   const [hell, setHell] = useState(0);
   const [log, setLog] = useState("最初の履歴書を読もう。");
+  const [verdicts, setVerdicts] = useState<Verdict[]>([]);
 
   const done = index >= TOTAL;
   const current = candidates[index];
 
   const judge = (v: Verdict) => {
     if (done) return;
+    if ((v === "heaven" ? heaven : hell) >= QUOTA) return;
     const label = v === "heaven" ? "天国" : "地獄";
     if (v === "heaven") setHeaven(heaven + 1);
     else setHell(hell + 1);
     setIndex(index + 1);
+    setVerdicts([...verdicts, v]);
     setLog(`${current.name} を${label}へ。`);
   };
 
@@ -28,10 +31,12 @@ export default function App() {
     setIndex(0);
     setHeaven(0);
     setHell(0);
+    setVerdicts([]);
     setLog("最初の履歴書を読もう。");
   };
 
-  const quotaMet = heaven === QUOTA && hell === QUOTA;
+  const heavenFull = heaven >= QUOTA;
+  const hellFull = hell >= QUOTA;
 
   return (
     <main className="app">
@@ -54,7 +59,14 @@ export default function App() {
           <div className="result">
             <h2>審判終了</h2>
             <p>天国 {heaven} 人 / 地獄 {hell} 人</p>
-            <p>{quotaMet ? "ノルマ達成！" : `ノルマ未達成（各${QUOTA}人が目標）`}</p>
+            <p>ノルマ達成！</p>
+            <ul className="summary">
+              {candidates.map((c, i) => (
+                <li key={c.id} className={verdicts[i]}>
+                  {c.name}（{c.job}）→ {verdicts[i] === "heaven" ? "天国" : "地獄"}
+                </li>
+              ))}
+            </ul>
             <button className="reset" onClick={reset}>もう一度</button>
           </div>
         ) : (
@@ -71,11 +83,11 @@ export default function App() {
       </section>
 
       <div className="actions">
-        <button className="btn heaven" disabled={done} onClick={() => judge("heaven")}>
-          ☁ 天国へ
+        <button className="btn heaven" disabled={done || heavenFull} onClick={() => judge("heaven")}>
+          ☁ 天国へ{heavenFull && "（満員）"}
         </button>
-        <button className="btn hell" disabled={done} onClick={() => judge("hell")}>
-          🔥 地獄へ
+        <button className="btn hell" disabled={done || hellFull} onClick={() => judge("hell")}>
+          🔥 地獄へ{hellFull && "（満員）"}
         </button>
       </div>
 
