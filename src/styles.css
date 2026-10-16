@@ -122,5 +122,6 @@ body { font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", "Comic Sans MS", s
 @media (prefers-reduced-motion: reduce) {
   .game-screen::before, .fx-heaven span, .fx-hell, .fx-transition { animation: none !important; }
   .fx-heaven span { opacity: .5; }
+  .fx-transition { display: none; }
   .scene-svg * { animation: none !important; }
 }
