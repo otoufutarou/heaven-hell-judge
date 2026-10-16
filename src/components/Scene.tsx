@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import catImage from "../../57E25FD4-9398-4EC1-AC6E-1E4EFC6AD72F.png";
-import girlImage from "../../Girl_20261016221626.png";
-import deskImage from "../../ACEF1B10-2B34-46B4-A70C-E10BD171A00F.png";
+const catImage = new URL("../../57E25FD4-9398-4EC1-AC6E-1E4EFC6AD72F.png", import.meta.url).href;
+const girlImage = new URL("../../Girl_20261016221626.png", import.meta.url).href;
+const deskImage = new URL("../../ACEF1B10-2B34-46B4-A70C-E10BD171A00F.png", import.meta.url).href;
 
 export type Reaction = { kind: "heaven" | "hell"; n: number } | null;
 
