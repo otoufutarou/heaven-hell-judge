@@ -87,13 +87,17 @@ export default function App() {
       </header>
 
       <section className="judge" aria-label="審判者">
-        <Scene reaction={reaction} />
-        <p className="bubble">
+        <Scene reaction={reaction} completed={done} />
+        <p className="bubble candidate-speech">
           {done ? "業務終了。おつかれさま。" : `「${current.statement}」`}
         </p>
       </section>
 
-      <section className="panel resume" aria-live="polite">
+      <section
+        className={`panel resume${index > 0 ? " paper-page" : ""}`}
+        key={index}
+        aria-live="polite"
+      >
         {done ? (
           <div className="result">
             <h2>審判終了</h2>
