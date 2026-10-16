@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { candidates } from "./data";
+import { candidates, introLines, type Relation } from "./data";
 
 type Verdict = "heaven" | "hell";
 
@@ -7,12 +7,14 @@ const TOTAL = candidates.length;
 const QUOTA = TOTAL / 2;
 
 export default function App() {
+  const [intro, setIntro] = useState(0);
   const [index, setIndex] = useState(0);
   const [heaven, setHeaven] = useState(0);
   const [hell, setHell] = useState(0);
   const [log, setLog] = useState("最初の履歴書を読もう。");
   const [verdicts, setVerdicts] = useState<Verdict[]>([]);
 
+  const inIntro = intro < introLines.length;
   const done = index >= TOTAL;
   const current = candidates[index];
 
@@ -28,6 +30,7 @@ export default function App() {
   };
 
   const reset = () => {
+    setIntro(introLines.length);
     setIndex(0);
     setHeaven(0);
     setHell(0);
@@ -37,6 +40,21 @@ export default function App() {
 
   const heavenFull = heaven >= QUOTA;
   const hellFull = hell >= QUOTA;
+
+  if (inIntro) {
+    return (
+      <main className="app intro" onClick={() => setIntro(intro + 1)}>
+        <h1 className="title">地獄の審判者</h1>
+        <div className="scene">
+          <div className="avatar" role="img" aria-label="少女">👧</div>
+          <div className="avatar small" role="img" aria-label="猫">🐈‍⬛</div>
+        </div>
+        <p className="bubble">{introLines[intro]}</p>
+        <p className="hint">タップして進む（{intro + 1}/{introLines.length}）</p>
+        <p className="note">※ 死や自死など重いテーマを含みます。</p>
+      </main>
+    );
+  }
 
   return (
     <main className="app">
@@ -50,7 +68,7 @@ export default function App() {
       <section className="judge" aria-label="審判者">
         <div className="avatar" role="img" aria-label="審判者のイラスト">👹</div>
         <p className="bubble">
-          {done ? "業務終了。おつかれさま。" : current.claim}
+          {done ? "業務終了。おつかれさま。" : `「${current.statement}」`}
         </p>
       </section>
 
@@ -63,7 +81,7 @@ export default function App() {
             <ul className="summary">
               {candidates.map((c, i) => (
                 <li key={c.id} className={verdicts[i]}>
-                  {c.name}（{c.job}）→ {verdicts[i] === "heaven" ? "天国" : "地獄"}
+                  {c.name}（{c.age}歳・{c.cause}）→ {verdicts[i] === "heaven" ? "天国" : "地獄"}
                 </li>
               ))}
             </ul>
@@ -71,11 +89,15 @@ export default function App() {
           </div>
         ) : (
           <>
-            <h2>履歴書 No.{current.id}</h2>
-            <p className="who">{current.name}（{current.age}歳）／{current.job}</p>
+            <h2>No.{current.id} {current.name}</h2>
+            <p className="who">享年 {current.age}歳　死因：{current.cause}</p>
+            <h3>報告書</h3>
+            <Section title="彼（彼女）を恨んでいる人" items={current.resented} />
+            <Section title="彼（彼女）に感謝している人" items={current.grateful} />
+            <h4>〈所感〉</h4>
             <ul>
-              {current.history.map((h) => (
-                <li key={h}>{h}</li>
+              {current.notes.map((n) => (
+                <li key={n}>{n}</li>
               ))}
             </ul>
           </>
@@ -93,5 +115,25 @@ export default function App() {
 
       <footer className="panel log">{log}</footer>
     </main>
+  );
+}
+
+function Section({ title, items }: { title: string; items: Relation[] }) {
+  return (
+    <>
+      <h4>〈{title}〉</h4>
+      {items.length === 0 ? (
+        <p className="none">なし</p>
+      ) : (
+        <ul>
+          {items.map((r) => (
+            <li key={r.who}>
+              <b>{r.who}</b>
+              <br />▶ {r.detail}
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 }

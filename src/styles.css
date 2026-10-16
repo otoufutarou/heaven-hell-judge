@@ -47,3 +47,13 @@ body { font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", "Comic Sans MS", s
 .summary { list-style: none; padding: 0; margin: 8px 0 0; text-align: left; line-height: 1.9; font-size: 14px; }
 .summary .heaven { color: #1c5a73; }
 .summary .hell { color: #7a1f17; }
+
+.intro { justify-content: center; align-items: center; text-align: center; cursor: pointer; }
+.title { margin: 0; font-size: 28px; }
+.scene { display: flex; gap: 16px; align-items: flex-end; }
+.avatar.small { width: 72px; height: 72px; font-size: 38px; }
+.hint, .note { margin: 0; font-size: 13px; color: #5a8a86; }
+.resume h3 { margin: 12px 0 0; font-size: 16px; border-bottom: 2px dashed #9fd6d0; }
+.resume h4 { margin: 12px 0 4px; font-size: 14px; color: #2b6f6b; }
+.resume li { margin-bottom: 6px; font-size: 14px; }
+.none { margin: 0; font-size: 14px; color: #7a9a97; }
